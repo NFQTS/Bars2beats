@@ -13,7 +13,7 @@
       --bg: #000000;
       --text: #ffffff;
       --accent: #d0d0d0;
-      --glow: #ffffff22;
+      --glow: #ffffff15;
     }
 
     * {
@@ -34,21 +34,46 @@
       margin: 0 auto;
       padding: 0 5vw;
       text-align: center;
+      position: relative;
+      z-index: 2;
     }
 
-    /* Subtle background glow */
+    /* Jailhouse stripes - animated */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        90deg,
+        transparent 0px,
+        transparent 60px,
+        rgba(255,255,255,0.08) 60px,
+        rgba(255,255,255,0.08) 62px
+      );
+      animation: slideStripes 40s linear infinite;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    @keyframes slideStripes {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-122px); }
+    }
+
+    /* Glow overlay */
     .bg-glow {
       position: fixed;
       inset: 0;
       background: radial-gradient(circle at 30% 40%, var(--glow) 0%, transparent 60%),
                   radial-gradient(circle at 70% 60%, var(--glow) 0%, transparent 60%);
       pointer-events: none;
-      animation: pulse 18s infinite alternate ease-in-out;
+      animation: pulse 20s infinite alternate ease-in-out;
+      z-index: 1;
     }
 
     @keyframes pulse {
-      0%   { opacity: 0.5; transform: scale(1); }
-      100% { opacity: 0.85; transform: scale(1.03); }
+      0%   { opacity: 0.6; }
+      100% { opacity: 0.9; }
     }
 
     /* Hero */
@@ -59,6 +84,7 @@
       justify-content: center;
       align-items: center;
       position: relative;
+      z-index: 2;
     }
 
     .hero h1 {
@@ -67,25 +93,53 @@
       font-weight: 700;
       letter-spacing: -0.04em;
       line-height: 0.88;
-      margin-bottom: 1.2rem;
+      margin-bottom: 1.5rem;
       opacity: 0;
       animation: fadeIn 2s ease-out forwards;
+    }
+
+    .quotes-slider {
+      max-width: 900px;
+      margin: 0 auto 3rem;
+      height: 120px;
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      animation: fadeIn 2.2s ease-out 0.4s forwards;
+    }
+
+    .quote {
+      position: absolute;
+      inset: 0;
+      font-style: italic;
+      font-size: clamp(1.2rem, 3.5vw, 1.8rem);
+      color: var(--accent);
+      padding: 0 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+
+    .quote.active {
+      opacity: 1;
     }
 
     .tagline {
       font-size: clamp(1.4rem, 4vw, 2.2rem);
       color: var(--accent);
       max-width: 700px;
-      margin: 0 auto 2.5rem;
+      margin: 0 auto 3rem;
       opacity: 0;
-      animation: fadeIn 2.2s ease-out 0.5s forwards;
+      animation: fadeIn 2.2s ease-out 0.8s forwards;
     }
 
     .typing {
       overflow: hidden;
       white-space: nowrap;
       border-right: 3px solid var(--accent);
-      animation: typing 3.5s steps(40, end) 1s forwards, blink 0.8s step-end infinite;
+      animation: typing 3.5s steps(40, end) 1.5s forwards, blink 0.8s step-end infinite;
       width: 0;
     }
 
@@ -110,7 +164,7 @@
       border-radius: 999px;
       transition: all 0.5s ease;
       opacity: 0;
-      animation: fadeIn 2s ease-out 1.2s forwards;
+      animation: fadeIn 2s ease-out 1.8s forwards;
     }
 
     .cta:hover {
@@ -127,6 +181,8 @@
     /* Value */
     .value {
       padding: 6rem 0 10rem;
+      position: relative;
+      z-index: 2;
     }
 
     .value-grid {
@@ -163,11 +219,14 @@
       color: #777;
       font-size: 0.9rem;
       border-top: 1px solid #222;
+      position: relative;
+      z-index: 2;
     }
 
     @media (max-width: 768px) {
       .hero h1 { font-size: clamp(4rem, 14vw, 9rem); }
-      .tagline { font-size: clamp(1.2rem, 5vw, 1.8rem); }
+      .quotes-slider { height: 180px; }
+      .quote { font-size: clamp(1.1rem, 4vw, 1.5rem); }
     }
   </style>
 </head>
@@ -178,8 +237,15 @@
   <section class="hero">
     <div class="container">
       <h1>Bars2Beats</h1>
+      
+      <div class="quotes-slider">
+        <div class="quote">"I had spent many years pursuing excellence... Now it was dedicated to freedom, and that was far more important." — Nina Simone</div>
+        <div class="quote">"Jazz stands for freedom. It's supposed to be the voice of freedom: Get out there and improvise..." — Duke Ellington</div>
+        <div class="quote">"To me, punk rock is the freedom to create, freedom to be successful... It's freedom." — Patti Smith</div>
+      </div>
+
       <div class="tagline">
-        <span class="typing">Voice from behind bars. Real lyrics. Real royalties.</span>
+        <span class="typing">AI voice cloning. Your lyrics. Epic impact.</span>
       </div>
       <a href="#get-started" class="cta">Unlock Now</a>
     </div>
@@ -209,6 +275,20 @@
   </footer>
 
   <script>
+    // Quote slider
+    const quotes = document.querySelectorAll('.quote');
+    let current = 0;
+
+    function showNext() {
+      quotes[current].classList.remove('active');
+      current = (current + 1) % quotes.length;
+      quotes[current].classList.add('active');
+    }
+
+    quotes[0].classList.add('active');
+    setInterval(showNext, 6000); // Change every 6 seconds
+
+    // Value reveal
     const items = document.querySelectorAll('.value-item');
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry, i) => {

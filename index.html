@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Bars2Beats – Turn Voice Into Freedom</title>
+  <title>Bars2Beats – Break Free Through Beats</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital@0;1&display=swap" rel="stylesheet">
@@ -11,11 +11,11 @@
   <style>
     :root {
       --bg: #ffffff;
-      --accent: #c3b1e1;
-      --accent-dark: #a78bfa;
-      --text: #1a1a1a;
-      --text-light: #6b7280;
-      --cream: #f5f0e9;
+      --fg: #000000;
+      --accent: #333333;
+      --accent-light: #666666;
+      --text-light: #999999;
+      --shadow: rgba(0,0,0,0.15);
     }
 
     * {
@@ -27,7 +27,7 @@
     body {
       font-family: 'Inter', system-ui, -apple-system, sans-serif;
       background: var(--bg);
-      color: var(--text);
+      color: var(--fg);
       line-height: 1.6;
       overflow-x: hidden;
     }
@@ -36,6 +36,31 @@
       max-width: 1200px;
       margin: 0 auto;
       padding: 0 5vw;
+    }
+
+    /* Jailhouse Theme Elements */
+    .bars-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: repeating-linear-gradient(
+        to right,
+        transparent,
+        transparent 40px,
+        var(--accent-light) 40px,
+        var(--accent-light) 42px
+      );
+      opacity: 0.15;
+      animation: breakBars 2s ease-out forwards 1s;
+    }
+
+    @keyframes breakBars {
+      to {
+        opacity: 0;
+        transform: translateX(100%);
+      }
     }
 
     /* Hero */
@@ -48,7 +73,18 @@
       text-align: center;
       position: relative;
       padding: 8rem 0 12rem;
-      background: linear-gradient(180deg, rgba(195,177,225,0.08) 0%, transparent 60%);
+      background: var(--bg);
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(180deg, rgba(0,0,0,0.05) 0%, transparent 60%);
     }
 
     .hero h1 {
@@ -58,38 +94,64 @@
       letter-spacing: -0.03em;
       line-height: 0.92;
       margin-bottom: 1.5rem;
+      position: relative;
+      z-index: 2;
+      animation: fadeInUp 1.5s ease-out;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(50px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .hero .sub {
       font-size: clamp(1.25rem, 3vw, 1.8rem);
-      color: var(--text-light);
+      color: var(--accent-light);
       max-width: 680px;
       margin: 0 auto 2.5rem;
+      position: relative;
+      z-index: 2;
+      animation: fadeInUp 1.5s ease-out 0.3s forwards;
+      opacity: 0;
     }
 
     .hero .tag {
       font-style: italic;
-      color: var(--accent-dark);
+      color: var(--accent);
       font-size: 1.4rem;
       margin-bottom: 3.5rem;
+      position: relative;
+      z-index: 2;
+      animation: fadeInUp 1.5s ease-out 0.6s forwards;
+      opacity: 0;
     }
 
     .cta {
       display: inline-block;
       padding: 1.2rem 3rem;
-      background: linear-gradient(135deg, var(--accent), var(--accent-dark));
-      color: white;
+      background: var(--fg);
+      color: var(--bg);
       font-size: 1.2rem;
       font-weight: 600;
       border-radius: 999px;
       text-decoration: none;
       transition: all 0.3s ease;
-      box-shadow: 0 10px 30px rgba(195,177,225,0.25);
+      box-shadow: 0 10px 30px var(--shadow);
+      position: relative;
+      z-index: 2;
+      animation: fadeInUp 1.5s ease-out 0.9s forwards, pulse 2s infinite 3s;
+      opacity: 0;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
     }
 
     .cta:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 20px 50px rgba(195,177,225,0.4);
+      transform: translateY(-4px) scale(1.05);
+      box-shadow: 0 20px 50px var(--shadow);
     }
 
     .trust {
@@ -97,12 +159,23 @@
       font-size: 0.95rem;
       color: var(--text-light);
       letter-spacing: 0.5px;
+      position: relative;
+      z-index: 2;
+      animation: fadeInUp 1.5s ease-out 1.2s forwards;
+      opacity: 0;
     }
 
     /* Values */
     .values {
       padding: 12rem 0;
-      background: var(--cream);
+      background: linear-gradient(180deg, var(--bg) 0%, #f8f8f8 100%);
+    }
+
+    .values h2 {
+      text-align: center;
+      font-size: 3.2rem;
+      font-family: 'Playfair Display', serif;
+      margin-bottom: 2rem;
     }
 
     .values-grid {
@@ -114,9 +187,13 @@
 
     .value-card {
       text-align: center;
+      padding: 3rem 2rem;
+      background: var(--bg);
+      border: 1px solid rgba(0,0,0,0.1);
+      border-radius: 12px;
+      transition: all 0.4s ease;
       opacity: 0;
       transform: translateY(30px);
-      transition: all 0.8s ease-out;
     }
 
     .value-card.visible {
@@ -124,20 +201,45 @@
       transform: translateY(0);
     }
 
+    .value-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 40px var(--shadow);
+    }
+
     .value-card h3 {
       font-size: 1.8rem;
       margin: 1.5rem 0 1rem;
-      color: var(--accent-dark);
+      color: var(--accent);
     }
 
     .value-card p {
-      color: var(--text-light);
+      color: var(--accent-light);
       font-size: 1.1rem;
     }
 
     /* How */
     .how {
       padding: 12rem 0;
+      position: relative;
+    }
+
+    .how::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: var(--text-light);
+      opacity: 0.3;
+      z-index: 1;
+    }
+
+    .how h2 {
+      text-align: center;
+      font-size: 3.2rem;
+      font-family: 'Playfair Display', serif;
+      margin-bottom: 2rem;
     }
 
     .steps {
@@ -146,6 +248,8 @@
       justify-content: center;
       gap: 3rem;
       margin-top: 6rem;
+      position: relative;
+      z-index: 2;
     }
 
     .step {
@@ -153,13 +257,21 @@
       min-width: 240px;
       max-width: 320px;
       text-align: center;
+      padding: 2rem;
+      background: var(--bg);
+      border-radius: 12px;
+      transition: all 0.4s ease;
+    }
+
+    .step:hover {
+      background: #f0f0f0;
     }
 
     .step-number {
       width: 60px;
       height: 60px;
-      background: var(--accent);
-      color: white;
+      background: var(--fg);
+      color: var(--bg);
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -167,6 +279,12 @@
       font-size: 1.6rem;
       font-weight: 700;
       margin: 0 auto 1.5rem;
+      animation: spinIn 1s ease-out;
+    }
+
+    @keyframes spinIn {
+      from { transform: rotate(-180deg) scale(0.5); opacity: 0; }
+      to { transform: rotate(0) scale(1); opacity: 1; }
     }
 
     .step h4 {
@@ -178,7 +296,21 @@
     .final-cta {
       padding: 12rem 0;
       text-align: center;
-      background: linear-gradient(180deg, rgba(195,177,225,0.05) 0%, transparent 100%);
+      background: linear-gradient(180deg, rgba(0,0,0,0.05) 0%, transparent 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .final-cta::after {
+      content: '';
+      position: absolute;
+      bottom: -50%;
+      left: 50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(0,0,0,0.1) 0%, transparent 70%);
+      transform: translateX(-50%);
+      opacity: 0.05;
     }
 
     .final-cta h2 {
@@ -189,7 +321,7 @@
 
     .final-cta p {
       font-size: 1.4rem;
-      color: var(--text-light);
+      color: var(--accent-light);
       max-width: 680px;
       margin: 0 auto 3.5rem;
     }
@@ -209,43 +341,47 @@
       .hero h1 {
         font-size: clamp(3rem, 12vw, 6rem);
       }
+      .steps {
+        flex-direction: column;
+      }
     }
   </style>
 </head>
 <body>
 
   <section class="hero">
+    <div class="bars-overlay"></div>
     <div class="container">
-      <h1>Turn Your Voice<br>Into Freedom</h1>
-      <p class="sub">AI-powered music creation for the ones who inspire you most.<br>Consent-first voice cloning. Real lyrics. Real impact.</p>
-      <p class="tag">Because every bar deserves to become a beat…<br>and every story deserves to be heard.</p>
+      <h1>Break Your Bars<br>Into Beats</h1>
+      <p class="sub">AI-powered music from behind bars.<br>Consent-first voice cloning. Your lyrics. Epic impact.</p>
+      <p class="tag">From prison cells to playlists...<br>Every voice deserves to echo freedom.</p>
       
-      <a href="#get-started" class="cta">Start Supporting an Artist →</a>
+      <a href="#get-started" class="cta">Join the Revolution →</a>
       
-      <div class="trust">100% Consent-Driven  •  Ethical AI  •  Built for Real Stories</div>
+      <div class="trust">100% Consent-Driven  •  Ethical AI  •  Real Stories, Real Change</div>
     </div>
   </section>
 
   <section class="values">
     <div class="container">
-      <h2 style="text-align:center; font-size:3.2rem; font-family:'Playfair Display', serif; margin-bottom:2rem;">What We Create Together</h2>
+      <h2>What We Forge Together</h2>
       
       <div class="values-grid">
         <div class="value-card">
-          <h3>Her Voice, Your Support</h3>
-          <p>Upload existing audio with full consent. We create a secure AI clone that captures his flow, ad-libs, and soul.</p>
+          <h3>Voice Unchained</h3>
+          <p>Upload raw audio with consent. AI clones capture flow, grit, and soul – no bars can hold it.</p>
         </div>
         <div class="value-card">
-          <h3>Lyrics to Full Tracks</h3>
-          <p>He writes the poems & raps from inside. We turn them into songs — in the styles he loves.</p>
+          <h3>Lyrics Set Free</h3>
+          <p>Send poems & raps from inside. We transform them into fire tracks in styles that inspire.</p>
         </div>
         <div class="value-card">
-          <h3>Monetize & Build Future</h3>
-          <p>Streams, royalties, fan collabs — income goes straight to family-managed accounts. A bridge to tomorrow.</p>
+          <h3>Monetize the Movement</h3>
+          <p>Royalties, streams, fan fire – payouts to families. Build empires from echoes.</p>
         </div>
         <div class="value-card">
-          <h3>Hope & Healing</h3>
-          <p>Music as purpose. Therapy through creation. Real change starts with voice.</p>
+          <h3>Hope Ignited</h3>
+          <p>Music as rebellion. Therapy in beats. Break cycles, claim futures.</p>
         </div>
       </div>
     </div>
@@ -253,28 +389,28 @@
 
   <section class="how">
     <div class="container">
-      <h2 style="text-align:center; font-size:3.2rem; font-family:'Playfair Display', serif; margin-bottom:2rem;">How It Works</h2>
+      <h2>The Escape Plan</h2>
       
       <div class="steps">
         <div class="step">
           <div class="step-number">1</div>
-          <h4>Consent & Clone</h4>
-          <p>Upload public audio → we verify ownership & create private voice model</p>
+          <h4>Lock In Consent</h4>
+          <p>Upload audio → verify & clone the voice that can't be silenced.</p>
         </div>
         <div class="step">
           <div class="step-number">2</div>
-          <h4>Create</h4>
-          <p>Send lyrics via call/mail → choose desired style/vibe</p>
+          <h4>Drop the Bars</h4>
+          <p>Lyrics via call or mail → pick legendary styles to fuel the fire.</p>
         </div>
         <div class="step">
           <div class="step-number">3</div>
-          <h4>Produce</h4>
-          <p>AI generates → human producers polish to perfection</p>
+          <h4>Forge the Hit</h4>
+          <p>AI generates → pros polish to street-ready perfection.</p>
         </div>
         <div class="step">
           <div class="step-number">4</div>
-          <h4>Release & Earn</h4>
-          <p>Drop tracks → collect royalties & build legacy</p>
+          <h4>Release & Rise</h4>
+          <p>Drop tracks → earn royalties, build legacies beyond walls.</p>
         </div>
       </div>
     </div>
@@ -282,37 +418,46 @@
 
   <section class="final-cta">
     <div class="container">
-      <h2>One Voice<br>Can Change Everything</h2>
-      <p>Join the movement giving incarcerated artists a real shot at tomorrow.</p>
-      <a href="#get-started" class="cta">Get Started Free</a>
+      <h2>One Beat<br>Can Shatter Chains</h2>
+      <p>Join the uprising – empower voices locked away, unleash hits that change lives.</p>
+      <a href="#get-started" class="cta">Get In Now</a>
       <p style="margin-top:2rem; font-size:1.1rem; color:var(--text-light);">
-        For families, partners, and believers.<br>No pressure — just possibility.
+        For the fighters, families, and future legends.<br>Excitement awaits – no limits.
       </p>
     </div>
   </section>
 
   <footer>
     <div class="container">
-      © 2026 Bars2Beats – Empowering Voices Ethically<br>
-      <a href="#" style="color:var(--accent-dark); text-decoration:none; margin:0 1rem;">About</a> •
-      <a href="#" style="color:var(--accent-dark); text-decoration:none; margin:0 1rem;">Privacy</a> •
-      <a href="#" style="color:var(--accent-dark); text-decoration:none; margin:0 1rem;">Contact</a>
+      © 2026 Bars2Beats – Shattering Silence Ethically<br>
+      <a href="#" style="color:var(--accent); text-decoration:none; margin:0 1rem;">About</a> •
+      <a href="#" style="color:var(--accent); text-decoration:none; margin:0 1rem;">Privacy</a> •
+      <a href="#" style="color:var(--accent); text-decoration:none; margin:0 1rem;">Contact</a>
     </div>
   </footer>
 
   <script>
-    // Simple fade-in on scroll
+    // Fade-in on scroll for cards
     const cards = document.querySelectorAll('.value-card');
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
+      entries.forEach((entry, index) => {
         if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
+          setTimeout(() => {
+            entry.target.classList.add('visible');
+          }, index * 200); // Staggered animation
         }
       });
     }, { threshold: 0.1 });
 
     cards.forEach(card => observer.observe(card));
+
+    // Add spinIn to steps on load
+    const steps = document.querySelectorAll('.step-number');
+    steps.forEach((step, index) => {
+      step.style.animationDelay = `${index * 0.3}s`;
+    });
   </script>
 
 </body>
 </html>
+```​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​

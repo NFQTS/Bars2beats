@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -150,6 +149,7 @@
       transition: opacity 1.5s ease;
       line-height: 1.65;
       font-weight: 300;
+      text-align: center;
     }
 
     .quote.active {
@@ -223,8 +223,8 @@
 
     .value-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 5rem;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 4rem;
       max-width: 1100px;
       margin: 0 auto;
     }
@@ -238,7 +238,6 @@
       border-radius: 16px;
       background: rgba(255, 255, 255, 0.02);
       border: 1px solid rgba(255, 255, 255, 0.06);
-      transition: all 0.6s ease;
     }
 
     .value-item:hover {
@@ -279,7 +278,14 @@
       letter-spacing: 0.05em;
     }
 
-    @media (max-width: 768px) {
+    @media (max-width: 900px) {
+      .value-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2.5rem;
+      }
+    }
+
+    @media (max-width: 640px) {
       .hero h1 { 
         font-size: clamp(3.5rem, 16vw, 10rem);
         margin-bottom: 2rem;
@@ -296,15 +302,14 @@
         margin-bottom: 3rem;
       }
       .value-grid { 
-        gap: 3.5rem;
         grid-template-columns: 1fr;
+        gap: 3rem;
       }
       .value {
         padding: 6rem 0 8rem;
       }
     }
   </style>
-
 </head>
 <body>
 
@@ -314,20 +319,18 @@
     <div class="container">
       <h1>Bars2Beats</h1>
 
-```
-  <div class="quotes-slider">
-    <div class="quote">"I had spent many years pursuing excellence... Now it was dedicated to freedom, and that was far more important." — Nina Simone</div>
-    <div class="quote">"To me, punk rock is the freedom to create, freedom to be successful... It's freedom." — Patti Smith</div>
-    <div class="quote">"I don't make songs for free, I make 'em for freedom." — Chance The Rapper</div>
-  </div>
+      <div class="quotes-slider">
+        <div class="quote">“I had spent many years pursuing excellence... Now it was dedicated to freedom, and that was far more important.” — Nina Simone</div>
+        <div class="quote">“To me, punk rock is the freedom to create, freedom to be successful... It’s freedom.” — Patti Smith</div>
+        <div class="quote">“I don’t make songs for free, I make ’em for freedom.” — Chance The Rapper</div>
+      </div>
 
-  <div class="tagline">
-    <span class="typing">AI empowered. Your lyrics. Build freedom.</span>
-  </div>
-  <a href="#get-started" class="cta">Unlock Now</a>
-</div>
-```
+      <div class="tagline">
+        <span class="typing">AI empowered. Your lyrics. Build freedom.</span>
+      </div>
 
+      <a href="#get-started" class="cta">Unlock Now</a>
+    </div>
   </section>
 
   <section class="value">

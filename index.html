@@ -1,1 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bars2Beats – Turn Voice Into Freedom</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital@0;1&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg: #ffffff;
+      --accent: #c3b1e1;
+      --accent-dark: #a78bfa;
+      --text: #1a1a1a;
+      --text-light: #6b7280;
+      --cream: #f5f0e9;
+    }
 
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 5vw;
+    }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      padding: 8rem 0 12rem;
+      background: linear-gradient(180deg, rgba(195,177,225,0.08) 0%, transparent 60%);
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3.5rem, 8vw, 9rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 0.92;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero .sub {
+      font-size: clamp(1.25rem, 3vw, 1.8rem);
+      color: var(--text-light);
+      max-width: 680px;
+      margin: 0 auto 2.5rem;
+    }
+
+    .hero .tag {
+      font-style: italic;
+      color: var(--accent-dark);
+      font-size: 1.4rem;
+      margin-bottom: 3.5rem;
+    }
+
+    .cta {
+      display: inline-block;
+      padding: 1.2rem 3rem;
+      background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+      color: white;
+      font-size: 1.2rem;
+      font-weight: 600;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 30px rgba(195,177,225,0.25);
+    }
+
+    .cta:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 50px rgba(195,177,225,0.4);
+    }
+
+    .trust {
+      margin-top: 2.5rem;
+      font-size: 0.95rem;
+      color: var(--text-light);
+      letter-spacing: 0.5px;
+    }
+
+    /* Values */
+    .values {
+      padding: 12rem 0;
+      background: var(--cream);
+    }
+
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 4rem;
+      margin-top: 6rem;
+    }
+
+    .value-card {
+      text-align: center;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s ease-out;
+    }
+
+    .value-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .value-card h3 {
+      font-size: 1.8rem;
+      margin: 1.5rem 0 1rem;
+      color: var(--accent-dark);
+    }
+
+    .value-card p {
+      color: var(--text-light);
+      font-size: 1.1rem;
+    }
+
+    /* How */
+    .how {
+      padding: 12rem 0;
+    }
+
+    .steps {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 3rem;
+      margin-top: 6rem;
+    }
+
+    .step {
+      flex: 1;
+      min-width: 240px;
+      max-width: 320px;
+      text-align: center;
+    }
+
+    .step-number {
+      width: 60px;
+      height: 60px;
+      background: var(--accent);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin: 0 auto 1.5rem;
+    }
+
+    .step h4 {
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+    }
+
+    /* Final CTA */
+    .final-cta {
+      padding: 12rem 0;
+      text-align: center;
+      background: linear-gradient(180deg, rgba(195,177,225,0.05) 0%, transparent 100%);
+    }
+
+    .final-cta h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 7vw, 6rem);
+      margin-bottom: 1.5rem;
+    }
+
+    .final-cta p {
+      font-size: 1.4rem;
+      color: var(--text-light);
+      max-width: 680px;
+      margin: 0 auto 3.5rem;
+    }
+
+    footer {
+      padding: 4rem 0;
+      text-align: center;
+      color: var(--text-light);
+      font-size: 0.9rem;
+      border-top: 1px solid rgba(0,0,0,0.05);
+    }
+
+    @media (max-width: 768px) {
+      .hero {
+        padding: 6rem 0 10rem;
+      }
+      .hero h1 {
+        font-size: clamp(3rem, 12vw, 6rem);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <section class="hero">
+    <div class="container">
+      <h1>Turn Your Voice<br>Into Freedom</h1>
+      <p class="sub">AI-powered music creation for the ones who inspire you most.<br>Consent-first voice cloning. Real lyrics. Real impact.</p>
+      <p class="tag">Because every bar deserves to become a beat…<br>and every story deserves to be heard.</p>
+      
+      <a href="#get-started" class="cta">Start Supporting an Artist →</a>
+      
+      <div class="trust">100% Consent-Driven  •  Ethical AI  •  Built for Real Stories</div>
+    </div>
+  </section>
+
+  <section class="values">
+    <div class="container">
+      <h2 style="text-align:center; font-size:3.2rem; font-family:'Playfair Display', serif; margin-bottom:2rem;">What We Create Together</h2>
+      
+      <div class="values-grid">
+        <div class="value-card">
+          <h3>Her Voice, Your Support</h3>
+          <p>Upload existing audio with full consent. We create a secure AI clone that captures his flow, ad-libs, and soul.</p>
+        </div>
+        <div class="value-card">
+          <h3>Lyrics to Full Tracks</h3>
+          <p>He writes the poems & raps from inside. We turn them into songs — in the styles he loves.</p>
+        </div>
+        <div class="value-card">
+          <h3>Monetize & Build Future</h3>
+          <p>Streams, royalties, fan collabs — income goes straight to family-managed accounts. A bridge to tomorrow.</p>
+        </div>
+        <div class="value-card">
+          <h3>Hope & Healing</h3>
+          <p>Music as purpose. Therapy through creation. Real change starts with voice.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="how">
+    <div class="container">
+      <h2 style="text-align:center; font-size:3.2rem; font-family:'Playfair Display', serif; margin-bottom:2rem;">How It Works</h2>
+      
+      <div class="steps">
+        <div class="step">
+          <div class="step-number">1</div>
+          <h4>Consent & Clone</h4>
+          <p>Upload public audio → we verify ownership & create private voice model</p>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <h4>Create</h4>
+          <p>Send lyrics via call/mail → choose desired style/vibe</p>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <h4>Produce</h4>
+          <p>AI generates → human producers polish to perfection</p>
+        </div>
+        <div class="step">
+          <div class="step-number">4</div>
+          <h4>Release & Earn</h4>
+          <p>Drop tracks → collect royalties & build legacy</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="final-cta">
+    <div class="container">
+      <h2>One Voice<br>Can Change Everything</h2>
+      <p>Join the movement giving incarcerated artists a real shot at tomorrow.</p>
+      <a href="#get-started" class="cta">Get Started Free</a>
+      <p style="margin-top:2rem; font-size:1.1rem; color:var(--text-light);">
+        For families, partners, and believers.<br>No pressure — just possibility.
+      </p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      © 2026 Bars2Beats – Empowering Voices Ethically<br>
+      <a href="#" style="color:var(--accent-dark); text-decoration:none; margin:0 1rem;">About</a> •
+      <a href="#" style="color:var(--accent-dark); text-decoration:none; margin:0 1rem;">Privacy</a> •
+      <a href="#" style="color:var(--accent-dark); text-decoration:none; margin:0 1rem;">Contact</a>
+    </div>
+  </footer>
+
+  <script>
+    // Simple fade-in on scroll
+    const cards = document.querySelectorAll('.value-card');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    cards.forEach(card => observer.observe(card));
+  </script>
+
+</body>
+</html>
